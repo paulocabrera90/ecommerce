@@ -1,13 +1,20 @@
 package com.infosl.ecommerce.model;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "ordd")
 public class DetalleOrden {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer ordd_id;
 	
 	@Column
@@ -15,6 +22,11 @@ public class DetalleOrden {
 	private double ordd_precio;
 	private double ordd_total;
 	private double ordd_cant;
+	
+	@OneToOne
+	private Orden orden;
+	@ManyToOne
+	private Producto prod;
 	
 	public DetalleOrden() {
 		// TODO Auto-generated constructor stub
@@ -76,6 +88,23 @@ public class DetalleOrden {
 		return "DetalleOrden [ordd_id=" + ordd_id + ", ordd_nombre=" + ordd_nombre + ", ordd_precio=" + ordd_precio
 				+ ", ordd_total=" + ordd_total + ", ordd_cant=" + ordd_cant + "]";
 	}
+
+	public Orden getOrden() {
+		return orden;
+	}
+
+	public void setOrden(Orden orden) {
+		this.orden = orden;
+	}
+
+	public Producto getProd() {
+		return prod;
+	}
+
+	public void setProd(Producto prod) {
+		this.prod = prod;
+	}
+	
 	
 	
 }

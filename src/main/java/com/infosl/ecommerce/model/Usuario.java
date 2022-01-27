@@ -1,13 +1,21 @@
 package com.infosl.ecommerce.model;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "usr")
 public class Usuario {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer usr_id;
 	@Column
 	private String  usr_name;
@@ -17,6 +25,12 @@ public class Usuario {
 	private String usr_telefono;
 	private String usr_tipo;
 	private String usr_pass;
+	
+	@OneToMany(mappedBy = "user")
+	private List<Producto> listProducto;
+	
+	@OneToMany(mappedBy = "user")
+	private List<Orden> listOrden;
 	
 	public Usuario() {
 		super();
@@ -101,6 +115,24 @@ public class Usuario {
 				+ usr_email + ", usr_direccion=" + usr_direccion + ", usr_telefono=" + usr_telefono + ", usr_tipo="
 				+ usr_tipo + ", usr_pass=" + usr_pass + "]";
 	}
+
+	public List<Producto> getListProducto() {
+		return listProducto;
+	}
+
+	public void setListProducto(List<Producto> listProducto) {
+		this.listProducto = listProducto;
+	}
+
+	public List<Orden> getListOrden() {
+		return listOrden;
+	}
+
+	public void setListOrden(List<Orden> listOrden) {
+		this.listOrden = listOrden;
+	}
+	
+	
 	
 		
 }

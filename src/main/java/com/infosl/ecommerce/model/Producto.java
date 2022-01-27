@@ -1,13 +1,19 @@
 package com.infosl.ecommerce.model;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "pro")
 public class Producto {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer pro_id;
 	
 	@Column
@@ -17,12 +23,16 @@ public class Producto {
 	private double pro_precio;
 	private int pro_cant;
 	
+	@ManyToOne
+	private Usuario user;
+	
 	public Producto() {
 		// TODO Auto-generated constructor stub
 	}
 	
+	
 	public Producto(Integer pro_id, String pro_nombre, String pro_descr, String pro_img, double pro_precio,
-			int pro_cant) {
+			int pro_cant, Usuario user) {
 		super();
 		this.pro_id = pro_id;
 		this.pro_nombre = pro_nombre;
@@ -30,8 +40,10 @@ public class Producto {
 		this.pro_img = pro_img;
 		this.pro_precio = pro_precio;
 		this.pro_cant = pro_cant;
+		this.user = user;
 	}
-	
+
+
 	public Integer getPro_id() {
 		return pro_id;
 	}
@@ -98,4 +110,13 @@ public class Producto {
 		// TODO Auto-generated method stub
 		return super.equals(obj);
 	}
+	
+	public Usuario getUser() {
+		return user;
+	}
+
+	public void setUser(Usuario user) {
+		this.user = user;
+	}
+	
 }
