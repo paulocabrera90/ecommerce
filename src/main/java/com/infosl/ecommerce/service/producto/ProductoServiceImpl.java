@@ -1,4 +1,4 @@
-package com.infosl.ecommerce.service;
+package com.infosl.ecommerce.service.producto;
 
 import java.util.List;
 import java.util.Optional;

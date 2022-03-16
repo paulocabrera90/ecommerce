@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.infosl.ecommerce.model.Producto;
 import com.infosl.ecommerce.model.Usuario;
-import com.infosl.ecommerce.service.ProductoService;
+import com.infosl.ecommerce.service.producto.ProductoService;
 
 @Controller
 @RequestMapping("/productos")
