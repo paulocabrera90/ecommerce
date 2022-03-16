@@ -55,17 +55,7 @@ public class ProductoController {
 		if (producto.getPro_id() == null) { // validacion cuando se crea un producto (id = null)
 			String nombreImagen = upload.saveImage(file);
 			producto.setImagen(nombreImagen);
-		}else {
-			if(file.isEmpty()) {// obtenemos la imagen de la server
-				Producto prod = new Producto();
-				prod = productoService.get(producto.getPro_id()).get();
-				producto.setImagen(prod.getImagen());
-			}else {
-				String nombreImagen = upload.saveImage(file);
-				producto.setImagen(nombreImagen);
-			}
-		}
-		
+		}		
 		productoService.save(producto);
 		return "redirect:/productos";
 	}
@@ -83,7 +73,21 @@ public class ProductoController {
 	}
 	
 	@PostMapping("/update")
-	public String update(Producto producto) {
+	public String update(Producto producto, @RequestParam("img") MultipartFile file) throws IOException {
+		
+		Producto prod = new Producto();
+		prod = productoService.get(producto.getPro_id()).get();
+		
+		if(file.isEmpty()) {// obtenemos la imagen de la server			
+			producto.setImagen(prod.getImagen());
+		}else {      //Cuando se edita la imagen			
+			if (!prod.getImagen().equals("default.jpg")) {
+				upload.deleteImg(prod.getImagen());
+			}
+			String nombreImagen = upload.saveImage(file);
+			producto.setImagen(nombreImagen);
+		}
+		producto.setUser(prod.getUser());
 		productoService.update(producto);
 		return "redirect:/productos";
 	}
@@ -91,6 +95,13 @@ public class ProductoController {
 	
 	@GetMapping("/delete/{id}")
 	public String delete (@PathVariable Integer id) {
+		Producto prod = new Producto();
+		prod = productoService.get(id).get();
+		
+		if (!prod.getImagen().equals("default.jpg")) {
+			upload.deleteImg(prod.getImagen());
+		}
+		
 		productoService.delete(id);
 		return "redirect:/productos";
 	}
