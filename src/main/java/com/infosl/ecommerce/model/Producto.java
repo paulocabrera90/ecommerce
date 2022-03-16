@@ -19,7 +19,7 @@ public class Producto {
 	@Column
 	private String pro_nombre;
 	private String pro_descr;
-	private String pro_img;
+	private String imagen;
 	private double pro_precio;
 	private int pro_cant;
 	
@@ -31,13 +31,13 @@ public class Producto {
 	}
 	
 	
-	public Producto(Integer pro_id, String pro_nombre, String pro_descr, String pro_img, double pro_precio,
+	public Producto(Integer pro_id, String pro_nombre, String pro_descr, String img, double pro_precio,
 			int pro_cant, Usuario user) {
 		super();
 		this.pro_id = pro_id;
 		this.pro_nombre = pro_nombre;
 		this.pro_descr = pro_descr;
-		this.pro_img = pro_img;
+		this.imagen = img;
 		this.pro_precio = pro_precio;
 		this.pro_cant = pro_cant;
 		this.user = user;
@@ -68,12 +68,12 @@ public class Producto {
 		this.pro_descr = pro_descr;
 	}
 
-	public String getPro_img() {
-		return pro_img;
+	public String getImagen() {
+		return imagen;
 	}
 
-	public void setPro_img(String pro_img) {
-		this.pro_img = pro_img;
+	public void setImagen(String img) {
+		this.imagen = img;
 	}
 
 	public double getPro_precio() {
@@ -98,12 +98,13 @@ public class Producto {
 		return super.clone();
 	}
 	
-	
+
 	@Override
 	public String toString() {
-		return "Producto [pro_id=" + pro_id + ", pro_nombre=" + pro_nombre + ", pro_descr=" + pro_descr + ", pro_img="
-				+ pro_img + ", pro_precio=" + pro_precio + ", pro_cant=" + pro_cant + "]";
+		return "Producto [pro_id=" + pro_id + ", pro_nombre=" + pro_nombre + ", pro_descr=" + pro_descr + ", imagen="
+				+ imagen + ", pro_precio=" + pro_precio + ", pro_cant=" + pro_cant + ", user=" + user + "]";
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {

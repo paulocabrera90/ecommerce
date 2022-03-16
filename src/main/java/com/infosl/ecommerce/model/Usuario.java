@@ -35,7 +35,13 @@ public class Usuario {
 	public Usuario() {
 		super();
 	}	
+		
 	
+	public Usuario(Integer usr_id) {
+		super();
+		this.usr_id = usr_id;
+	}
+
 	public Usuario(Integer usr_id, String usr_name, String usr_cod, String usr_email, String usr_direccion,
 			String usr_telefono, String usr_tipo, String usr_pass) {
 		super();
