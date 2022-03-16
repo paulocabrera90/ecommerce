@@ -1,6 +1,9 @@
 package com.infosl.ecommerce.controller;
 
+import java.io.IOException;
 import java.util.Optional;
+
+import javax.swing.GroupLayout;
 
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +13,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.infosl.ecommerce.model.Producto;
 import com.infosl.ecommerce.model.Usuario;
+import com.infosl.ecommerce.service.UploadFileService;
 import com.infosl.ecommerce.service.producto.ProductoService;
 
 @Controller
@@ -23,6 +29,9 @@ public class ProductoController {
 	
 	@Autowired
 	private ProductoService productoService;
+	
+	@Autowired
+	private UploadFileService upload;
 	
 	@GetMapping("")
 	public String show(Model model) {
@@ -36,11 +45,27 @@ public class ProductoController {
 	}
 	
 	@PostMapping("/save")
-	public String save(Producto producto) {
+	public String save(Producto producto,@RequestParam("img") MultipartFile file) throws IOException {
 		LOGGER.info("Objeto producto {}", producto);
 		Usuario usu = new Usuario(1);
 		
 		producto.setUser(usu);
+		
+		//Imagen upload
+		if (producto.getPro_id() == null) { // validacion cuando se crea un producto (id = null)
+			String nombreImagen = upload.saveImage(file);
+			producto.setImagen(nombreImagen);
+		}else {
+			if(file.isEmpty()) {// obtenemos la imagen de la server
+				Producto prod = new Producto();
+				prod = productoService.get(producto.getPro_id()).get();
+				producto.setImagen(prod.getImagen());
+			}else {
+				String nombreImagen = upload.saveImage(file);
+				producto.setImagen(nombreImagen);
+			}
+		}
+		
 		productoService.save(producto);
 		return "redirect:/productos";
 	}

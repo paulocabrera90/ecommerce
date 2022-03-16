@@ -1,5 +1,6 @@
 package com.infosl.ecommerce.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,6 +14,8 @@ public class UploadFileService {
 	
 	private String folder = "images//"; //ubicacion del proyecto donde voy a cargar las imagenes
 	
+	
+	
 	public String saveImage(MultipartFile file) throws IOException {
 		if (!file.isEmpty()) {
 			byte [] bytesImg =	file.getBytes();
@@ -20,6 +23,12 @@ public class UploadFileService {
 			Files.write(path, bytesImg);
 			return file.getOriginalFilename();
 		}
-		return "";
+		return "defualt.jpg";
+	}
+	
+	public void deleteImg(String imagen) {
+		String ruta = "images//";
+		File file = new File(ruta+imagen);
+		file.delete();
 	}
 }
