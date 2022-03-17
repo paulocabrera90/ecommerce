@@ -30,7 +30,7 @@ private final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 	private ProductoService productoService;
 	
 	//Almacenar los detalles de orden
-	List<DetalleOrden> detalleOrdens = new ArrayList<DetalleOrden>();
+	List<DetalleOrden> detalleOrdensList = new ArrayList<DetalleOrden>();
 	//Datos de la orden
 	Orden orden = new Orden();
 	
@@ -56,7 +56,7 @@ private final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 	}
 	
 	@PostMapping("/carrito")
-	public String addCarrito(@RequestParam Integer pro_id, @RequestParam Integer cantidad) {
+	public String addCarrito(@RequestParam Integer pro_id, @RequestParam Integer cantidad, Model model) {
 		DetalleOrden detalleOrden = new DetalleOrden();
 		Producto producto= new Producto();
 		double sumaTotal= 0;
@@ -65,6 +65,25 @@ private final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 		producto = optionalProducto.get();
 		LOGGER.info("Objeto producto al carrito {}", producto);
 		LOGGER.info("Cantidad: {}", cantidad);
+		
+		//Se carga el detalle de la orden
+		detalleOrden.setOrdd_cant(cantidad);
+		detalleOrden.setOrdd_precio(producto.getPro_precio());
+		detalleOrden.setOrdd_nombre(producto.getPro_nombre());
+		detalleOrden.setOrdd_total(producto.getPro_precio()*cantidad);
+		detalleOrden.setProd(producto);
+		
+		detalleOrdensList.add(detalleOrden);
+		
+		// usando funcion lamda, convierto y sumo
+		sumaTotal = detalleOrdensList.stream().mapToDouble(dt->dt.getOrdd_total()).sum();
+		
+		orden.setOrd_total(sumaTotal);
+		
+		LOGGER.info("Lista detalle orden: {}", detalleOrdensList);
+		model.addAttribute("listDetalleOrden", detalleOrdensList);
+		model.addAttribute("orden", orden);
+		
 		return "usuario/carrito";
 	}
 }

@@ -22,22 +22,28 @@ public class Orden {
 	private String ord_numero;
 	private Date ord_fecCrea;
 	private Date ord_fecRec;
+	private double ord_total;
 	
 	@ManyToOne
 	private Usuario user;
 	@OneToOne(mappedBy = "orden")
 	private DetalleOrden detalleOrd;
-	
+		
+
 	public Orden() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 
-	public Orden(Integer ord_id, String ord_numero, Date ord_fecCrea, Date ord_fecRec) {
+	public Orden(Integer ord_id, String ord_numero, Date ord_fecCrea, Date ord_fecRec, Usuario user,
+			DetalleOrden detalleOrd, double ord_total) {
 		super();
 		this.ord_id = ord_id;
 		this.ord_numero = ord_numero;
 		this.ord_fecCrea = ord_fecCrea;
 		this.ord_fecRec = ord_fecRec;
+		this.user = user;
+		this.detalleOrd = detalleOrd;
+		this.ord_total = ord_total;
 	}
 
 	public Integer getOrd_id() {
@@ -72,12 +78,15 @@ public class Orden {
 		this.ord_fecRec = ord_fecRec;
 	}
 
+	
+	
 	@Override
 	public String toString() {
 		return "Orden [ord_id=" + ord_id + ", ord_numero=" + ord_numero + ", ord_fecCrea=" + ord_fecCrea
-				+ ", ord_fecRec=" + ord_fecRec + "]";
+				+ ", ord_fecRec=" + ord_fecRec + ", user=" + user + ", detalleOrd=" + detalleOrd + ", ord_total="
+				+ ord_total + "]";
 	}
-	
+
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
 		// TODO Auto-generated method stub
@@ -105,6 +114,16 @@ public class Orden {
 	public void setDetalleOrd(DetalleOrden detalleOrd) {
 		this.detalleOrd = detalleOrd;
 	}
+
+	public double getOrd_total() {
+		return ord_total;
+	}
+
+	public void setOrd_total(double ord_total) {
+		this.ord_total = ord_total;
+	}
+	
+	
 		
 	
 }
