@@ -1,6 +1,8 @@
 package com.infosl.ecommerce.controller;
 
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +21,8 @@ import com.infosl.ecommerce.model.DetalleOrden;
 import com.infosl.ecommerce.model.Orden;
 import com.infosl.ecommerce.model.Producto;
 import com.infosl.ecommerce.model.Usuario;
+import com.infosl.ecommerce.service.detalleorden.IDetalleOrdenService;
+import com.infosl.ecommerce.service.orden.IOrdenService;
 import com.infosl.ecommerce.service.producto.IProductoService;
 import com.infosl.ecommerce.service.usuario.IUsuarioService;
 
@@ -29,10 +33,14 @@ public class HomeController {
 private final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 	
 	@Autowired
-	private IProductoService productoService;
-	
+	private IProductoService productoService;	
 	@Autowired
 	private IUsuarioService iUsuarioService;
+	@Autowired
+	private IOrdenService iOrdenService;
+	@Autowired
+	private IDetalleOrdenService iDetalleOrdenService;
+	
 	
 	//Almacenar los detalles de orden
 	List<DetalleOrden> detalleOrdensList = new ArrayList<DetalleOrden>();
@@ -148,5 +156,34 @@ private final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 		model.addAttribute("usuario", usu);
 		
 		return "/usuario/resumenorden";
+	}
+	
+	//Guardar la orden con el usuario
+	@GetMapping("/saveOrder")
+	public String saveOrder() {
+		Date fecCre = new Date();
+		orden.setOrd_fecCrea(fecCre);
+		orden.setOrd_numero(iOrdenService.generarNroOrden());
+		LOGGER.info("Nro de orden: {}", orden.getOrd_numero());
+		
+		//Usuario
+		Usuario usu = new Usuario();
+		usu=iUsuarioService.findByPrimaryKey(1).get();
+		
+		orden.setUser(usu);
+		
+		iOrdenService.save(orden);
+		
+		//Guardar detalles
+		for(DetalleOrden dt :detalleOrdensList) {
+			dt.setOrden(orden);
+			iDetalleOrdenService.save(dt);
+		}
+		
+		///Limpiar lista y orden
+		orden= new Orden();
+		detalleOrdensList.clear();
+		
+		return "redirect:/";
 	}
 }
