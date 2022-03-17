@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -185,5 +186,16 @@ private final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 		detalleOrdensList.clear();
 		
 		return "redirect:/";
+	}
+	
+	@PostMapping("/search")
+	public String search(@RequestParam String busqueda, Model model) {
+		LOGGER.info("Texto de busqueda: {}", busqueda.toUpperCase());
+		// usamos stream para filtrar por nombre del producto, despues lo convertimos en list, para agregarlo a la listProducto
+		List<Producto> listProducto= productoService.findAll().stream().filter(pro -> pro.getPro_nombre().toUpperCase().contains(busqueda.toUpperCase())).collect(Collectors.toList());
+		
+		LOGGER.info("Lista productos buscado: {}", listProducto);
+		model.addAttribute("listaProductos", listProducto);
+		return "usuario/home";
 	}
 }

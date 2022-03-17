@@ -1,6 +1,7 @@
 package com.infosl.ecommerce.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -26,8 +28,8 @@ public class Orden {
 	
 	@ManyToOne
 	private Usuario user;
-	@OneToOne(mappedBy = "orden")
-	private DetalleOrden detalleOrd;
+	@OneToMany(mappedBy = "orden")
+	private List<DetalleOrden> listDetalle;
 		
 
 	public Orden() {
@@ -35,14 +37,14 @@ public class Orden {
 	}
 
 	public Orden(Integer ord_id, String ord_numero, Date ord_fecCrea, Date ord_fecRec, Usuario user,
-			DetalleOrden detalleOrd, double ord_total) {
+			List<DetalleOrden> listDetalle, double ord_total) {
 		super();
 		this.ord_id = ord_id;
 		this.ord_numero = ord_numero;
 		this.ord_fecCrea = ord_fecCrea;
 		this.ord_fecRec = ord_fecRec;
 		this.user = user;
-		this.detalleOrd = detalleOrd;
+		this.listDetalle = listDetalle;
 		this.ord_total = ord_total;
 	}
 
@@ -83,7 +85,7 @@ public class Orden {
 	@Override
 	public String toString() {
 		return "Orden [ord_id=" + ord_id + ", ord_numero=" + ord_numero + ", ord_fecCrea=" + ord_fecCrea
-				+ ", ord_fecRec=" + ord_fecRec + ", user=" + user + ", detalleOrd=" + detalleOrd + ", ord_total="
+				+ ", ord_fecRec=" + ord_fecRec + ", user=" + user +  ", ord_total="
 				+ ord_total + "]";
 	}
 
@@ -107,12 +109,12 @@ public class Orden {
 		this.user = user;
 	}
 
-	public DetalleOrden getDetalleOrd() {
-		return detalleOrd;
+	public List<DetalleOrden> getListDetalle() {
+		return listDetalle;
 	}
 
-	public void setDetalleOrd(DetalleOrden detalleOrd) {
-		this.detalleOrd = detalleOrd;
+	public void setListDetalle(List<DetalleOrden> listDetalle) {
+		this.listDetalle = listDetalle;
 	}
 
 	public double getOrd_total() {

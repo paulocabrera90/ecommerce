@@ -23,7 +23,7 @@ public class DetalleOrden {
 	private double ordd_total;
 	private double ordd_cant;
 	
-	@OneToOne
+	@ManyToOne
 	private Orden orden;
 	@ManyToOne
 	private Producto prod;
