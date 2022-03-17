@@ -129,4 +129,10 @@ private final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 	
 		return "/usuario/carrito";
 	}
+	
+	@GetMapping("/order")
+	public String orden() {
+		
+		return "/usuario/resumenorden";
+	}
 }
