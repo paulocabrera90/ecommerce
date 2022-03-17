@@ -73,7 +73,12 @@ private final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 		detalleOrden.setOrdd_total(producto.getPro_precio()*cantidad);
 		detalleOrden.setProd(producto);
 		
-		detalleOrdensList.add(detalleOrden);
+		//Validar el producto no se agregue mas veces
+		Integer idProducto = producto.getPro_id();
+		boolean ingresado = detalleOrdensList.stream().anyMatch(prod -> prod.getProd().getPro_id() == idProducto);
+		if(!ingresado) {
+			detalleOrdensList.add(detalleOrden);
+		}		
 		
 		// usando funcion lamda, convierto y sumo
 		sumaTotal = detalleOrdensList.stream().mapToDouble(dt->dt.getOrdd_total()).sum();
@@ -111,5 +116,17 @@ private final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 		model.addAttribute("orden", orden);
 		
 		return "usuario/carrito";
+	}
+	
+	@GetMapping("/getCarrito")
+	public String getCarrito(Model model) {
+		
+		
+		
+		LOGGER.info("Lista detalle orden Nueva: {}", detalleOrdensList);
+		model.addAttribute("listDetalleOrden", detalleOrdensList);
+		model.addAttribute("orden", orden);
+	
+		return "/usuario/carrito";
 	}
 }
