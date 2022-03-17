@@ -86,4 +86,30 @@ private final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 		
 		return "usuario/carrito";
 	}
+	
+	//Quitar un producto del Carrito
+	@GetMapping("/delete/carrito/{id}")
+	public String deleteProdCar(@PathVariable Integer id, Model model) {
+		
+		//Detalle de nuevos productos
+		List<DetalleOrden> listDetalleOrdNueva = new ArrayList<DetalleOrden>();
+		
+		for (DetalleOrden detalleOrden : detalleOrdensList) {
+			if(detalleOrden.getProd().getPro_id() != id) {
+				listDetalleOrdNueva.add(detalleOrden);
+			}
+		}
+		detalleOrdensList = listDetalleOrdNueva;
+		
+		double sumaTotal= 0;
+		// usando funcion lamda, convierto y sumo
+		sumaTotal = detalleOrdensList.stream().mapToDouble(dt->dt.getOrdd_total()).sum();				
+		orden.setOrd_total(sumaTotal);
+		
+		LOGGER.info("Lista detalle orden Nueva: {}", detalleOrdensList);
+		model.addAttribute("listDetalleOrden", detalleOrdensList);
+		model.addAttribute("orden", orden);
+		
+		return "usuario/carrito";
+	}
 }
