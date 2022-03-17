@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.infosl.ecommerce.model.Producto;
-import com.infosl.ecommerce.service.producto.ProductoService;
+import com.infosl.ecommerce.service.producto.IProductoService;
  
 @Controller
 @RequestMapping("/administrador")
 public class AdministradorController {
 	
 	@Autowired
-	private ProductoService productoService;
+	private IProductoService productoService;
 	
 	@GetMapping("")
 	public String home(Model model) {

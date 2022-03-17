@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.infosl.ecommerce.model.DetalleOrden;
 import com.infosl.ecommerce.model.Orden;
 import com.infosl.ecommerce.model.Producto;
-import com.infosl.ecommerce.service.producto.ProductoService;
+import com.infosl.ecommerce.model.Usuario;
+import com.infosl.ecommerce.service.producto.IProductoService;
+import com.infosl.ecommerce.service.usuario.IUsuarioService;
 
 @Controller
 @RequestMapping("/")
@@ -27,7 +29,10 @@ public class HomeController {
 private final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 	
 	@Autowired
-	private ProductoService productoService;
+	private IProductoService productoService;
+	
+	@Autowired
+	private IUsuarioService iUsuarioService;
 	
 	//Almacenar los detalles de orden
 	List<DetalleOrden> detalleOrdensList = new ArrayList<DetalleOrden>();
@@ -121,8 +126,6 @@ private final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 	@GetMapping("/getCarrito")
 	public String getCarrito(Model model) {
 		
-		
-		
 		LOGGER.info("Lista detalle orden Nueva: {}", detalleOrdensList);
 		model.addAttribute("listDetalleOrden", detalleOrdensList);
 		model.addAttribute("orden", orden);
@@ -131,7 +134,18 @@ private final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 	}
 	
 	@GetMapping("/order")
-	public String orden() {
+	public String orden(Model model) {
+		
+		Usuario usu = new Usuario();
+		usu=iUsuarioService.findByPrimaryKey(1).get();
+		
+		
+		LOGGER.info("Lista detalle orden Nueva: {}", detalleOrdensList);
+		model.addAttribute("listDetalleOrden", detalleOrdensList);
+		model.addAttribute("orden", orden);
+		
+		LOGGER.info("Usuario: {}", usu);
+		model.addAttribute("usuario", usu);
 		
 		return "/usuario/resumenorden";
 	}

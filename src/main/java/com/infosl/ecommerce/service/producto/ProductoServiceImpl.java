@@ -7,19 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.infosl.ecommerce.model.Producto;
-import com.infosl.ecommerce.repository.ProductoRepository;
+import com.infosl.ecommerce.repository.IProductoRepository;
 
 @Service
-public class ProductoServiceImpl implements ProductoService {
+public class ProductoServiceImpl implements IProductoService {
 	
 	@Autowired
-	private ProductoRepository productoRepository;
+	private IProductoRepository productoRepository;
 
 	@Override
 	public Producto save(Producto producto) {
 		// TODO Auto-generated method stub
-		productoRepository.save(producto);
-		return null;
+	//	productoRepository.save(producto);
+		return productoRepository.save(producto);
 	}
 
 	@Override
