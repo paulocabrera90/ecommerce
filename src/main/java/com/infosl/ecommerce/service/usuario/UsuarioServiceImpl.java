@@ -45,5 +45,10 @@ public class UsuarioServiceImpl implements IUsuarioService{
 		return iUsuarioRepository.findById(id);
 	}
 
-	
+	@Override
+	public Optional<Usuario> findByEmail(String email) {
+		// TODO Auto-generated method stub
+		return iUsuarioRepository.findByEmail(email);
+	}
+
 }

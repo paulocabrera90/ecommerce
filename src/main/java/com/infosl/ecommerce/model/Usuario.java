@@ -19,8 +19,9 @@ public class Usuario {
 	private Integer usr_id;
 	@Column
 	private String  usr_name;
+	private String  usr_apellido;
 	private String usr_cod;
-	private String usr_email;
+	private String email;
 	private String usr_direccion;
 	private String usr_telefono;
 	private String usr_tipo;
@@ -42,18 +43,24 @@ public class Usuario {
 		this.usr_id = usr_id;
 	}
 
-	public Usuario(Integer usr_id, String usr_name, String usr_cod, String usr_email, String usr_direccion,
-			String usr_telefono, String usr_tipo, String usr_pass) {
+	
+	public Usuario(Integer usr_id, String usr_name, String usr_apellido, String usr_cod, String email,
+			String usr_direccion, String usr_telefono, String usr_tipo, String usr_pass, List<Producto> listProducto,
+			List<Orden> listOrden) {
 		super();
 		this.usr_id = usr_id;
 		this.usr_name = usr_name;
+		this.usr_apellido = usr_apellido;
 		this.usr_cod = usr_cod;
-		this.usr_email = usr_email;
+		this.email = email;
 		this.usr_direccion = usr_direccion;
 		this.usr_telefono = usr_telefono;
 		this.usr_tipo = usr_tipo;
 		this.usr_pass = usr_pass;
+		this.listProducto = listProducto;
+		this.listOrden = listOrden;
 	}
+
 
 	public Integer getUsr_id() {
 		return usr_id;
@@ -73,11 +80,11 @@ public class Usuario {
 	public void setUsr_cod(String usr_cod) {
 		this.usr_cod = usr_cod;
 	}
-	public String getUsr_email() {
-		return usr_email;
+	public String getEmail() {
+		return email;
 	}
-	public void setUsr_email(String usr_email) {
-		this.usr_email = usr_email;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getUsr_direccion() {
 		return usr_direccion;
@@ -102,8 +109,17 @@ public class Usuario {
 	}
 	public void setUsr_pass(String usr_pass) {
 		this.usr_pass = usr_pass;
-	}
+	}	
 	
+	public String getUsr_apellido() {
+		return usr_apellido;
+	}
+
+
+	public void setUsr_apellido(String usr_apellido) {
+		this.usr_apellido = usr_apellido;
+	}
+
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
 		// TODO Auto-generated method stub
@@ -115,12 +131,7 @@ public class Usuario {
 		return super.equals(obj);
 	}
 
-	@Override
-	public String toString() {
-		return "Usuario [usr_id=" + usr_id + ", usr_name=" + usr_name + ", usr_cod=" + usr_cod + ", usr_email="
-				+ usr_email + ", usr_direccion=" + usr_direccion + ", usr_telefono=" + usr_telefono + ", usr_tipo="
-				+ usr_tipo + ", usr_pass=" + usr_pass + "]";
-	}
+	
 
 	public List<Producto> getListProducto() {
 		return listProducto;
@@ -137,8 +148,12 @@ public class Usuario {
 	public void setListOrden(List<Orden> listOrden) {
 		this.listOrden = listOrden;
 	}
-	
-	
-	
-		
+
+
+	@Override
+	public String toString() {
+		return "Usuario [usr_id=" + usr_id + ", usr_name=" + usr_name + ", usr_apellido=" + usr_apellido + ", usr_cod="
+				+ usr_cod + ", email=" + email + ", usr_direccion=" + usr_direccion + ", usr_telefono=" + usr_telefono
+				+ ", usr_tipo=" + usr_tipo + ", usr_pass=" + usr_pass +  "]";
+	}
 }
