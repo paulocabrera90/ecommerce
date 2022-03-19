@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +51,9 @@ private final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 	Orden orden = new Orden();
 	
 	@GetMapping("")
-	public String home(Model model) {
+	public String home(Model model, HttpSession session) {
 		model.addAttribute("listaProductos", productoService.findAll());
+		LOGGER.info("Usuario Logeado {}", (Usuario) session.getAttribute("user"));
 		return "usuario/home";
 	}
 
@@ -143,11 +146,10 @@ private final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 	}
 	
 	@GetMapping("/order")
-	public String orden(Model model) {
+	public String orden(Model model, HttpSession session) {
 		
-		Usuario usu = new Usuario();
-		usu=iUsuarioService.findByPrimaryKey(1).get();
 		
+		Usuario usu = (Usuario) session.getAttribute("user");		
 		
 		LOGGER.info("Lista detalle orden Nueva: {}", detalleOrdensList);
 		model.addAttribute("listDetalleOrden", detalleOrdensList);
@@ -161,15 +163,14 @@ private final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 	
 	//Guardar la orden con el usuario
 	@GetMapping("/saveOrder")
-	public String saveOrder() {
+	public String saveOrder(HttpSession session) {
 		Date fecCre = new Date();
 		orden.setOrd_fecCrea(fecCre);
 		orden.setOrd_numero(iOrdenService.generarNroOrden());
 		LOGGER.info("Nro de orden: {}", orden.getOrd_numero());
 		
 		//Usuario
-		Usuario usu = new Usuario();
-		usu=iUsuarioService.findByPrimaryKey(1).get();
+		Usuario usu = (Usuario) session.getAttribute("user");		
 		
 		orden.setUser(usu);
 		

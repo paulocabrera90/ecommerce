@@ -55,7 +55,7 @@ public class UsuarioController {
 		//LOGGER.info("Usuario login validate {}", usuario.get());	
 		
 		if(usuario.isPresent()) {
-			session.setAttribute("idUsuario", usuario.get().getUsr_id());
+			session.setAttribute("user", usuario.get());
 			if(usuario.get().getUsr_tipo().equals(UsuarioTipo.ADMIN.toString())) {
 				return "redirect:/administrador";
 			}else {

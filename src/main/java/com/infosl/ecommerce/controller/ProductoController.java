@@ -3,6 +3,7 @@ package com.infosl.ecommerce.controller;
 import java.io.IOException;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
 import javax.swing.GroupLayout;
 
 import org.slf4j.*;
@@ -45,9 +46,10 @@ public class ProductoController {
 	}
 	
 	@PostMapping("/save")
-	public String save(Producto producto,@RequestParam("img") MultipartFile file) throws IOException {
+	public String save(Producto producto,@RequestParam("img") MultipartFile file, HttpSession session) throws IOException {
 		LOGGER.info("Objeto producto {}", producto);
-		Usuario usu = new Usuario(1);
+		//Usuario
+		Usuario usu = (Usuario) session.getAttribute("user");	
 		
 		producto.setUser(usu);
 		
