@@ -53,7 +53,10 @@ private final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 	@GetMapping("")
 	public String home(Model model, HttpSession session) {
 		model.addAttribute("listaProductos", productoService.findAll());
-		LOGGER.info("Usuario Logeado {}", (Usuario) session.getAttribute("user"));
+		
+		Usuario usu = (Usuario) session.getAttribute("user");	
+		model.addAttribute("idSession", usu);
+		LOGGER.info("Usuario Logeado {}", usu);
 		return "usuario/home";
 	}
 
@@ -136,11 +139,13 @@ private final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 	}
 	
 	@GetMapping("/getCarrito")
-	public String getCarrito(Model model) {
+	public String getCarrito(Model model, HttpSession session) {
 		
 		LOGGER.info("Lista detalle orden Nueva: {}", detalleOrdensList);
 		model.addAttribute("listDetalleOrden", detalleOrdensList);
 		model.addAttribute("orden", orden);
+		
+		model.addAttribute("idSession", ((Usuario) session.getAttribute("user")).getUsr_id());
 	
 		return "/usuario/carrito";
 	}

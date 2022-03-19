@@ -20,7 +20,11 @@
 <body>
 
    <!-- Navigation -->
-  <div th:include="usuario/template_usuario.html::header"></div>
+  
+  <div th:include="usuario/template_usuario.html::header" th:if="${idSession==null}"></div>
+  
+  
+  <div th:include="usuario/template_usuario.html::header-user" th:unless="${idSession==null}"></div>
 
     <!-- Page Content -->
     <div class="container">
