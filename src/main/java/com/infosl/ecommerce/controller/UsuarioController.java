@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,8 @@ public class UsuarioController {
 	@Autowired
 	private IOrdenService iOrdenService;
 	
+	BCryptPasswordEncoder passEncode= new BCryptPasswordEncoder();
+	
 	// /usuari/register
 	@GetMapping("/registro")
 	public String create() {
@@ -44,6 +47,7 @@ public class UsuarioController {
 		LOGGER.info("Usuario registro {}", user);
 		
 		user.setUsr_tipo(UsuarioTipo.USER.toString());
+		user.setUsr_pass( passEncode.encode(user.getUsr_pass()));
 		usuarioService.save(user);
 		
 		return "redirect:/";
@@ -54,7 +58,7 @@ public class UsuarioController {
 		return "usuario/login";
 	}
 	
-	@GetMapping("/validate")
+	@PostMapping("/validate")
 	public String validate(Usuario user, HttpSession session) {
 		LOGGER.info("Usuario login a validate {}", user);		
 		

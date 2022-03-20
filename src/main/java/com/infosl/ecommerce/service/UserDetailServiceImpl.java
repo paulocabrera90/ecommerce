@@ -39,8 +39,8 @@ public class UserDetailServiceImpl implements UserDetailsService{
 			httpSession.setAttribute("idUsuario", optionalUser.get().getUsr_id());
 			Usuario user = optionalUser.get();
 			
-			//return User.builder().username(user.getUsr_name()).password(user.getUsr_pass()).roles(user.getUsr_tipo()).build();
-			return User.builder().username(user.getUsr_name()).password(bCrypt.encode(user.getUsr_pass())).roles(user.getUsr_tipo()).build();
+			return User.builder().username(user.getUsr_name()).password(user.getUsr_pass()).roles(user.getUsr_tipo()).build();
+			//return User.builder().username(user.getUsr_name()).password(bCrypt.encode(user.getUsr_pass())).roles(user.getUsr_tipo()).build();
 			
 		}else {
 			throw new UsernameNotFoundException("Usuario no encontrado");
