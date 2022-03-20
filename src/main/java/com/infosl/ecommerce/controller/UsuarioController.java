@@ -1,5 +1,6 @@
 package com.infosl.ecommerce.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
@@ -8,12 +9,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.infosl.ecommerce.model.Orden;
 import com.infosl.ecommerce.model.Usuario;
 import com.infosl.ecommerce.model.UsuarioTipo;
+import com.infosl.ecommerce.service.orden.IOrdenService;
 import com.infosl.ecommerce.service.usuario.IUsuarioService;
 
 @Controller
@@ -24,6 +28,8 @@ public class UsuarioController {
 	
 	@Autowired
 	private IUsuarioService usuarioService;
+	@Autowired
+	private IOrdenService iOrdenService;
 	
 	// /usuari/register
 	@GetMapping("/registro")
@@ -67,4 +73,16 @@ public class UsuarioController {
 		return "redirect:/";
 	}
 
+	@GetMapping("/getCompras")
+	public String getCompras(Model model, HttpSession session) {
+		
+		Usuario usuario = ((Usuario) session.getAttribute("user"));
+		
+		model.addAttribute("idSession", usuario);
+		
+		List<Orden> listOrden = iOrdenService.findByUser((Usuario) session.getAttribute("user"));
+		
+		model.addAttribute("listOrden", listOrden);
+		return "usuario/compras"; 
+	}
 }

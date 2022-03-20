@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.infosl.ecommerce.model.Orden;
+import com.infosl.ecommerce.model.Usuario;
 import com.infosl.ecommerce.repository.IOrdenRepository;
 
 @Service
@@ -45,7 +46,7 @@ public class OrdenServiceImpl implements IOrdenService {
 			numero++;
 		}
 		
-		nroConcatenado = cantDeDigitos(numero)  + String.valueOf(numero);	
+		nroConcatenado = cantDeDigitos(numero);// + String.valueOf(numero);	
 		
 		return nroConcatenado;
 	}
@@ -60,6 +61,12 @@ public class OrdenServiceImpl implements IOrdenService {
         
         return numeroOrden;
     }
+
+	@Override
+	public List<Orden> findByUser(Usuario usuario) {
+		// TODO Auto-generated method stub
+		return iOrdenRepository.findByUser(usuario);
+	}
 	
 
 }

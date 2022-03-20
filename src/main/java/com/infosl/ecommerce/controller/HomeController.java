@@ -145,7 +145,9 @@ private final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
 		model.addAttribute("listDetalleOrden", detalleOrdensList);
 		model.addAttribute("orden", orden);
 		
-		model.addAttribute("idSession", ((Usuario) session.getAttribute("user")).getUsr_id());
+		//Usuario
+		Usuario usu = (Usuario) session.getAttribute("user");			
+		model.addAttribute("idSession", usu);
 	
 		return "/usuario/carrito";
 	}
