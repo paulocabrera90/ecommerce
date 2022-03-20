@@ -54,7 +54,7 @@ public class UsuarioController {
 		return "usuario/login";
 	}
 	
-	@PostMapping("/validate")
+	@GetMapping("/validate")
 	public String validate(Usuario user, HttpSession session) {
 		LOGGER.info("Usuario login a validate {}", user);		
 		
