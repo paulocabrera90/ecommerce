@@ -2,6 +2,7 @@ package com.infosl.ecommerce.service.orden;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,6 +67,12 @@ public class OrdenServiceImpl implements IOrdenService {
 	public List<Orden> findByUser(Usuario usuario) {
 		// TODO Auto-generated method stub
 		return iOrdenRepository.findByUser(usuario);
+	}
+
+	@Override
+	public Optional<Orden> findById(Integer ord_id) {
+		// TODO Auto-generated method stub
+		return iOrdenRepository.findById(ord_id);
 	}
 	
 

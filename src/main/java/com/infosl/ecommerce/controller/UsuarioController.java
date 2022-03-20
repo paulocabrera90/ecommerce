@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -85,4 +86,21 @@ public class UsuarioController {
 		model.addAttribute("listOrden", listOrden);
 		return "usuario/compras"; 
 	}
+	
+	@GetMapping("/detalle/{id}")
+	public String detalleCompra(@PathVariable Integer id, Model model, HttpSession session) {
+		
+		Optional<Orden> orden = iOrdenService.findById(id);
+		
+		model.addAttribute("detallesList", orden.get().getListDetalle());
+		
+		//session
+		Usuario usuario = ((Usuario) session.getAttribute("user"));		
+		model.addAttribute("idSession", usuario);
+		
+		LOGGER.info("id de la orden {}", id);	
+		
+		return "usuario/detallecompra";
+	}
+	
 }

@@ -35,8 +35,8 @@
       </h1>
 
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-        <li class="breadcrumb-item"><a href="compras.html">Compras</a></li>
+        <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+        <li class="breadcrumb-item"><a th:href="@{/usuario/getCompras}">Compras</a></li>
         <li class="breadcrumb-item active">Detalle de Compra</li>
       </ol>
 
@@ -55,11 +55,11 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td >Cantidad</td>
-                  <td >Producto</td>
-                  <td >Precio</td>
-                  <td >Total</td>
+                <tr th:each ="detalle: ${detallesList}">
+                  <td th:text="${detalle.ordd_cant}"></td>
+                  <td th:text="${detalle.ordd_nombre}"></td>
+                  <td th:text="${detalle.ordd_precio}"></td>
+                  <td th:text="${detalle.ordd_total}"></td>
                 </tr>
               </tbody>
             </table>
