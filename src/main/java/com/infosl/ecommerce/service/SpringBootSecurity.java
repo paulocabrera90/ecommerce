@@ -32,7 +32,7 @@ public class SpringBootSecurity extends WebSecurityConfigurerAdapter{
 		
 		http.csrf().disable().authorizeRequests()
 		.antMatchers("/administrador/**").hasRole(UsuarioTipo.ADMIN.toString())
-		.antMatchers("/porductos/**").hasRole(UsuarioTipo.ADMIN.toString())
+		.antMatchers("/productos/**").hasRole(UsuarioTipo.ADMIN.toString())
 		.and().formLogin().loginPage("/usuario/login")
 		.permitAll().defaultSuccessUrl("/usuario/validate");
 	}

@@ -25,7 +25,7 @@ public class Usuario {
 	private String usr_direccion;
 	private String usr_telefono;
 	private String usr_tipo;
-	private String usr_pass;
+	private String password;
 	
 	@OneToMany(mappedBy = "user")
 	private List<Producto> listProducto;
@@ -45,7 +45,7 @@ public class Usuario {
 
 	
 	public Usuario(Integer usr_id, String usr_name, String usr_apellido, String usr_cod, String email,
-			String usr_direccion, String usr_telefono, String usr_tipo, String usr_pass, List<Producto> listProducto,
+			String usr_direccion, String usr_telefono, String usr_tipo, String password, List<Producto> listProducto,
 			List<Orden> listOrden) {
 		super();
 		this.usr_id = usr_id;
@@ -56,7 +56,7 @@ public class Usuario {
 		this.usr_direccion = usr_direccion;
 		this.usr_telefono = usr_telefono;
 		this.usr_tipo = usr_tipo;
-		this.usr_pass = usr_pass;
+		this.password = password;
 		this.listProducto = listProducto;
 		this.listOrden = listOrden;
 	}
@@ -104,13 +104,15 @@ public class Usuario {
 	public void setUsr_tipo(String usr_tipo) {
 		this.usr_tipo = usr_tipo;
 	}
-	public String getUsr_pass() {
-		return usr_pass;
+		
+	public String getPassword() {
+		return password;
 	}
-	public void setUsr_pass(String usr_pass) {
-		this.usr_pass = usr_pass;
-	}	
-	
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public String getUsr_apellido() {
 		return usr_apellido;
 	}
@@ -154,6 +156,6 @@ public class Usuario {
 	public String toString() {
 		return "Usuario [usr_id=" + usr_id + ", usr_name=" + usr_name + ", usr_apellido=" + usr_apellido + ", usr_cod="
 				+ usr_cod + ", email=" + email + ", usr_direccion=" + usr_direccion + ", usr_telefono=" + usr_telefono
-				+ ", usr_tipo=" + usr_tipo + ", usr_pass=" + usr_pass +  "]";
+				+ ", usr_tipo=" + usr_tipo + ", password=" + password +  "]";
 	}
 }

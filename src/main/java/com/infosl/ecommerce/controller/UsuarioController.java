@@ -47,7 +47,7 @@ public class UsuarioController {
 		LOGGER.info("Usuario registro {}", user);
 		
 		user.setUsr_tipo(UsuarioTipo.USER.toString());
-		user.setUsr_pass( passEncode.encode(user.getUsr_pass()));
+		user.setPassword( passEncode.encode(user.getPassword()));
 		usuarioService.save(user);
 		
 		return "redirect:/";
@@ -58,11 +58,12 @@ public class UsuarioController {
 		return "usuario/login";
 	}
 	
-	@PostMapping("/validate")
+	@GetMapping("/validate")
 	public String validate(Usuario user, HttpSession session) {
 		LOGGER.info("Usuario login a validate {}", user);		
 		
-		Optional<Usuario> usuario = usuarioService.findByEmail(user.getEmail());				
+		//Optional<Usuario> usuario = usuarioService.findByEmail(user.getEmail());				
+		Optional<Usuario> usuario = usuarioService.findByPrimaryKey(Integer.parseInt(session.getAttribute("idUsuario").toString()));		
 		//LOGGER.info("Usuario login validate {}", usuario.get());	
 		
 		if(usuario.isPresent()) {
